@@ -115,8 +115,15 @@ class Pomme:
   
     fichiers_csv = [
       join(abspath(self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED]), fichier) 
-        for fichier in listdir(self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED]) 
-          if isfile(join(self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED], fichier))
+        for fichier in listdir(
+          self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED]
+        )
+          if isfile(
+            join(
+              self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED],
+              fichier
+            )
+          )
     ]
     
     for fichier in fichiers_csv:

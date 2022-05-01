@@ -138,6 +138,7 @@ class OradadAdaptateur(Adaptateur):
                           :
                           index_header_file_end
                         ]     
+    print(horodatage_trouve)
     horodatage_trouve = datetime.strptime(
                           horodatage_trouve,
                           OradadAdaptateur.FORMAT_DATE_HEURE
