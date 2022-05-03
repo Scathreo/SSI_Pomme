@@ -3,6 +3,7 @@ from os import listdir
 from os.path import isfile, join, abspath, basename
 
 
+from adaptateur.cassis_adaptateur   import CassisAdaptateur   as CassisAdaptateur
 from adaptateur.oradad_adaptateur   import OradadAdaptateur   as OradadAdaptateur
 from adaptateur.csv_adaptateur      import CSVAdaptateur      as CSVAdaptateur
 from adaptateur.database_adaptateur import DatabaseAdaptateur as DatabaseAdaptateur
@@ -70,6 +71,7 @@ class Pomme:
     
     self.adaptateur = []
     self.adaptateur += [OradadAdaptateur(self.adaptateur_CSV)]
+    self.adaptateur += [CassisAdaptateur(self.adaptateur_CSV)]
     
     
     
@@ -104,6 +106,16 @@ class Pomme:
           + Adaptateur.TRAITEMENT_SUFIX
           + CSVAdaptateur.EXTENTION_FICHIER
         )
+      if Adaptateur.SOURCE_CASSIS in fichier:
+        self.adaptateur[1].traitement_fichier(
+          fichier,
+          abspath(self.dossier_data[Pomme.KEY_PATH_DATA_PROCESSED])
+          + "/"
+          + Adaptateur.TRAITEMENT_PREFIX 
+          + basename(fichier)
+          + Adaptateur.TRAITEMENT_SUFIX
+          + CSVAdaptateur.EXTENTION_FICHIER
+        )
   
   
   
@@ -127,13 +139,14 @@ class Pomme:
     ]
     
     for fichier in fichiers_csv:
-      resultats = self.adaptateur_CSV.traitement_fichier(fichier)
-      
-      for resultat in resultats:
-        self.adaptateur_DB.traitement_fichier(
-          DatabaseAdaptateur.KEY_TABLE_PRIMARY, 
-          resultat
-        )
+      if not Adaptateur.SOURCE_CASSIS in fichier:
+        resultats = self.adaptateur_CSV.traitement_fichier(fichier)
+        
+        for resultat in resultats:
+          self.adaptateur_DB.traitement_fichier(
+            DatabaseAdaptateur.KEY_TABLE_PRIMARY, 
+            resultat
+          )
   
   
   

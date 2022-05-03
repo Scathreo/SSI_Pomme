@@ -138,6 +138,95 @@ class Adaptateur(ABC):
     
     
     
+  def __trouve_debut_fin_bloc_find__(self, 
+    texte, 
+    delemiteur_bloc_begin, 
+    delemiteur_bloc_end, 
+    index_debut=0, 
+    index_fin=-1
+  ):
+  
+  
+    if index_fin < 0: index_fin = len(texte)
+    
+    index_debut_bloc        = -1
+    index_fin_bloc          = -1
+    
+    compteur_ouverture_bloc = 0
+    
+    
+    index = texte.find(
+      delemiteur_bloc_begin, 
+      index_debut, 
+      index_fin
+    )
+    
+    index_debut_bloc = index
+    
+    if index >= 0:
+      compteur_ouverture_bloc = 1
+    
+    
+    
+    
+    index_debut_find = texte.find(
+      delemiteur_bloc_begin, 
+      index + len(delemiteur_bloc_begin), 
+      index_fin
+    )
+    
+    index_fin_find = texte.find(
+      delemiteur_bloc_end, 
+      index + len(delemiteur_bloc_begin), 
+      index_fin
+    )
+    
+    if index_fin_find < 0: 
+      index_fin_bloc = -1
+      return index_debut_bloc, index_fin_bloc
+    
+    
+    
+    
+    # Tant que des blocs sont ouverts
+    while compteur_ouverture_bloc > 0 and index_debut_find >= 0:
+      
+      index_fin_bloc = index_fin_find
+      
+      if index_fin_find < 0: 
+        index_fin_bloc = -1
+        return index_debut_bloc, index_fin_bloc
+      
+      
+      
+      if index_debut_find >= 0 and index_debut_find < index_fin_find:
+        compteur_ouverture_bloc = compteur_ouverture_bloc + 1
+        index_debut_find = index_debut_find + len(delemiteur_bloc_begin)
+      elif index_fin_find >= 0:
+        compteur_ouverture_bloc = compteur_ouverture_bloc - 1
+        index_debut_find = index_fin_find + len(delemiteur_bloc_end)
+        
+        
+      if compteur_ouverture_bloc == 0:
+        index_fin_bloc = index_fin_find
+        return index_debut_bloc, index_fin_bloc
+      
+      index_debut_find = texte.find(
+        delemiteur_bloc_begin, 
+        index_debut_find, 
+        index_fin
+      )
+      
+      index_fin_find = texte.find(
+        delemiteur_bloc_end, 
+        index_debut_find, 
+        index_fin
+      )
+    
+    return index_debut_bloc, index_fin_bloc
+    
+    
+    
     
     
   #############################################################################
