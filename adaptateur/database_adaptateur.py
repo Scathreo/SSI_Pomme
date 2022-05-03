@@ -183,14 +183,13 @@ class DatabaseAdaptateur(Adaptateur):
   
   
   
-  def __insert_into_db__(self, table, resultats):
-    
-    ignore_headers = []
-    ignore_headers_on_duplicate = []
-    
-    if table == DatabaseAdaptateur.KEY_TABLE_PRIMARY : 
-      ignore_headers = [0]
-      ignore_headers_on_duplicate = [4, 5]
+  
+  def __insert_into_db_vuln__(self, 
+    table, 
+    resultats,
+    ignore_headers,
+    ignore_headers_on_duplicate
+  ):
     
     
     headers = self.__get_headers__(
@@ -237,6 +236,80 @@ class DatabaseAdaptateur(Adaptateur):
     print("Record inserted")
     # the connection is not auto committed by default, so we must commit to save our changes
     self.connexion.commit()
+  
+  
+  
+  
+  
+  def __insert_into_db_cassis__(self, 
+    table, 
+    resultats,
+    ignore_headers,
+    ignore_headers_on_duplicate
+  ):
+    
+    
+    headers = self.__get_headers__(
+      self.database_tables[table], 
+      ignore_headers
+    )
+    headers_on_duplicate = self.__get_headers__(
+      self.database_tables[table], 
+      ignore_headers_on_duplicate
+    )
+    
+    
+    
+    sql = (
+      "INSERT INTO "
+      + self.database_info[DatabaseAdaptateur.KEY_DATABASE]
+      + "."
+      + self.database_tables[table]
+      + " ("
+    )
+    
+    for header in headers:
+      sql = sql + header + ", "
+    
+    sql = sql[0 : len(sql) - 2] + ") VALUES ("
+    
+    for header in headers:
+      sql = sql + "%s, "
+      
+    sql = sql[ 0 : len(sql) - 2 ] + ";"
+    
+    
+        
+    self.cursor.execute(sql, resultats)
+    print("Record inserted")
+    # the connection is not auto committed by default, so we must commit to save our changes
+    self.connexion.commit()
+  
+  
+  def __insert_into_db__(self, table, resultats):
+    
+    ignore_headers = []
+    ignore_headers_on_duplicate = []
+    
+    if table == DatabaseAdaptateur.KEY_TABLE_PRIMARY : 
+      ignore_headers = [0]
+      ignore_headers_on_duplicate = [4, 5]
+      self.__insert_into_db_vuln__(
+        table, 
+        resultats,
+        ignore_headers,
+        ignore_headers_on_duplicate
+      )
+      
+    if table == DatabaseAdaptateur.KEY_CASSIS_APPLICATIONS : 
+      ignore_headers = []
+      ignore_headers_on_duplicate = []
+      self.__insert_into_db_cassis__(
+        table, 
+        resultats,
+        ignore_headers,
+        ignore_headers_on_duplicate
+      )
   
   
     
