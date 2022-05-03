@@ -34,7 +34,7 @@ CREATE TABLE cassis_technologies (
   nom                       VARCHAR(50),
   type                      VARCHAR(100),
   norme_entreprise          VARCHAR(50),
-  fin_support               DATE,
+  fin_support               varchar(50),
   alerte_support            VARCHAR(100),
   portefeuille              VARCHAR(50),
   
@@ -52,7 +52,7 @@ CREATE TABLE cassis_applications (
   identifiant_unique        VARCHAR(20),
   etat_courant              VARCHAR(50),
   conformite_technologique  VARCHAR(50),
-  direction_mon             VARCHAR(10),
+  direction_mon             VARCHAR(50),
   description               VARCHAR(255),
   
   CONSTRAINT PK_id PRIMARY KEY (identifiant_unique)

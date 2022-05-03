@@ -247,6 +247,7 @@ class DatabaseAdaptateur(Adaptateur):
     ignore_headers,
     ignore_headers_on_duplicate
   ):
+    print(resultats)
     
     
     headers = self.__get_headers__(
@@ -276,7 +277,7 @@ class DatabaseAdaptateur(Adaptateur):
     for header in headers:
       sql = sql + "%s, "
       
-    sql = sql[ 0 : len(sql) - 2 ] + ";"
+    sql = sql[ 0 : len(sql) - 2 ] + ");"
     
     
         
@@ -301,7 +302,8 @@ class DatabaseAdaptateur(Adaptateur):
         ignore_headers_on_duplicate
       )
       
-    if table == DatabaseAdaptateur.KEY_CASSIS_APPLICATIONS : 
+    if (table == DatabaseAdaptateur.KEY_TABLE_K6_APPLICATIONS 
+      or table == DatabaseAdaptateur.KEY_TABLE_K6_TECHNOLOGIES): 
       ignore_headers = []
       ignore_headers_on_duplicate = []
       self.__insert_into_db_cassis__(

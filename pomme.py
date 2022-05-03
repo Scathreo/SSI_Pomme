@@ -50,7 +50,8 @@ class Pomme:
       ),
       self.adaptateur_config.traitement_fichier(
         [
-          DatabaseAdaptateur.KEY_TABLE_K6,
+          DatabaseAdaptateur.KEY_TABLE_K6_APPLICATIONS,
+          DatabaseAdaptateur.KEY_TABLE_K6_TECHNOLOGIES,
           DatabaseAdaptateur.KEY_TABLE_PRIMARY
         ]
       )
@@ -139,15 +140,29 @@ class Pomme:
     ]
     
     for fichier in fichiers_csv:
-      if not Adaptateur.SOURCE_CASSIS in fichier:
-        resultats = self.adaptateur_CSV.traitement_fichier(fichier)
+    
+      resultats = self.adaptateur_CSV.traitement_fichier(fichier)
+      
+      for resultat in resultats:
+      
+        if Adaptateur.SOURCE_CASSIS in fichier:
+          if CassisAdaptateur.APPLICATIONS_NAME_FILE in fichier:
+            self.adaptateur_DB.traitement_fichier(
+              DatabaseAdaptateur.KEY_TABLE_K6_APPLICATIONS, 
+              resultat
+            )
+          if CassisAdaptateur.TECHNOLOGIES_NAME_FILE in fichier:
+            self.adaptateur_DB.traitement_fichier(
+              DatabaseAdaptateur.KEY_TABLE_K6_TECHNOLOGIES, 
+              resultat
+            )
         
-        for resultat in resultats:
+        else:
           self.adaptateur_DB.traitement_fichier(
             DatabaseAdaptateur.KEY_TABLE_PRIMARY, 
             resultat
           )
-  
+    
   
   
   
