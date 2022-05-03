@@ -16,6 +16,9 @@ class CassisAdaptateur(Adaptateur):
 
   SOURCE = Adaptateur.SOURCE_CASSIS
   
+  APPLICATION_NAME_FILE = "Applications"
+  TECHNOLOGIES_NAME_FILE = "Technologies"
+  
   
   APPLICATIONS_HEADERS = [
     "Nom",
@@ -65,17 +68,11 @@ class CassisAdaptateur(Adaptateur):
     print("CassisAdaptateur - Init - End")
   
   
-    
+  
+  
   
     
-    
-    
-    
-  #############################################################################
-  ##########################     Public methods      ##########################
-  #############################################################################
-    
-  def traitement_fichier(self, path_data, path_csv):
+  def __import_technologies__(self, path_data, path_csv):
   
     # Ouvertures fichiers
     origine_data_file = self.__open_file__(path_data, "r")
@@ -137,3 +134,17 @@ class CassisAdaptateur(Adaptateur):
     
     self.__close_file__(origine_data_file)
     self.__close_file__(traited_data_file)
+    
+    
+    
+    
+  #############################################################################
+  ##########################     Public methods      ##########################
+  #############################################################################
+    
+  def traitement_fichier(self, path_data, path_csv):
+  
+    if CassisAdaptateur.TECHNOLOGIES_NAME_FILE in path_data:
+      self.__import_technologies__(path_data, path_csv)
+    
+    
