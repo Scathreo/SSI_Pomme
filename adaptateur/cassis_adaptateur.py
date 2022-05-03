@@ -26,8 +26,7 @@ class CassisAdaptateur(Adaptateur):
     "Identifiant unique",
     "Etat courant",
     "Conformité technologique",
-    "Direction MON",
-    "Description"
+    "Direction MON"
   ]
   
   
@@ -79,6 +78,24 @@ class CassisAdaptateur(Adaptateur):
   #############################################################################
     
   def traitement_fichier(self, path_data, path_csv):
-    pass
+  
+    # Ouvertures fichiers
+    origine_data_file = self.__open_file__(path_data, "r")
+    traited_data_file = self.__open_file__(path_csv, "w")
+    
+    
+    texte = origine_data_file.read()  # Lecture fichier données
+    
+    
+    texte = texte.replace(",", ";")
+    texte = texte.replace(";;;;;;;", "")
+    
+    
+    
+    traited_data_file.write(texte)
+    
+    
+    self.__close_file__(origine_data_file)
+    self.__close_file__(traited_data_file)
     
     

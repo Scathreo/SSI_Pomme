@@ -139,6 +139,8 @@ class Pomme:
           )
     ]
     
+    print(fichiers_csv)
+    
     for fichier in fichiers_csv:
     
       resultats = self.adaptateur_CSV.traitement_fichier(fichier)
