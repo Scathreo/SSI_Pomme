@@ -89,6 +89,41 @@ class CSVAdaptateur(Adaptateur):
     
 
     
+  
+    
+    
+  # Ecrit dans le fichier, les champs fournit en paramètre.
+  # Le fichier doit être ouvert en ecriture.
+  def __ecrit_donnees_from_array__(self, 
+    fichier, 
+    array
+  ):
+  
+  
+    try:
+      print("Writing in file " + fichier.name + "...")
+      
+      for element in array:
+        texte =+ str(element) + CSVAdaptateur.DELIMITEUR_CSV
+        
+      texte = texte[
+                      0
+                      :
+                      len(texte) - CSVAdaptateur.DELIMITEUR_CSV
+                    ]
+                    
+      texte = texte + "\n"
+                   
+      fichier.write(texte)
+      
+    except:
+      raise Exception("Error while writing in file " + fichier.name + ".")
+    
+    else:
+      print("Line wrote in file " + fichier.name + ".")
+    
+
+    
     
     
     
