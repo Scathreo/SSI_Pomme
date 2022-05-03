@@ -16,7 +16,7 @@ class CassisAdaptateur(Adaptateur):
 
   SOURCE = Adaptateur.SOURCE_CASSIS
   
-  APPLICATION_NAME_FILE = "Applications"
+  APPLICATIONS_NAME_FILE = "Applications"
   TECHNOLOGIES_NAME_FILE = "Technologies"
   
   
@@ -71,7 +71,7 @@ class CassisAdaptateur(Adaptateur):
   
   
   
-    
+  
   def __import_technologies__(self, path_data, path_csv):
   
     # Ouvertures fichiers
@@ -138,6 +138,73 @@ class CassisAdaptateur(Adaptateur):
     
     
     
+    
+  def __import_applications__(self, path_data, path_csv):
+  
+    # Ouvertures fichiers
+    origine_data_file = self.__open_file__(path_data, "r")
+    traited_data_file = self.__open_file__(path_csv, "w")
+    
+    
+    texte = origine_data_file.read()  # Lecture fichier données
+    
+    
+    compteur_champs  = 0
+    
+    index_debut_bloc = 0
+    index_fin_bloc   = 0 - len(CassisAdaptateur.BORNE_CHAMPS_FIN)
+    
+    resultats = CassisAdaptateur.APPLICATIONS_HEADERS
+    
+    
+    while not index_debut_bloc == -1 and not index_fin_bloc == -1:
+    
+    
+      index_debut_bloc, index_fin_bloc =  self.__trouve_debut_fin_bloc_find__(
+        texte, 
+        CassisAdaptateur.BORNE_CHAMPS_DEBUT,
+        CassisAdaptateur.BORNE_CHAMPS_FIN,
+        index_fin_bloc + len(CassisAdaptateur.BORNE_CHAMPS_FIN)
+      )
+      
+      resultats[compteur_champs] = texte[
+        index_debut_bloc + len(CassisAdaptateur.BORNE_CHAMPS_DEBUT)
+        : 
+        index_fin_bloc
+      ].replace("\n","\\n")
+
+      compteur_champs = compteur_champs + 1
+      
+      
+      if compteur_champs == len(CassisAdaptateur.TECHNOLOGIES_HEADERS) - 1:
+        self.adaptateur_CSV.__ecrit_donnees__(
+          traited_data_file,
+          resultats[0],
+          resultats[1],
+          resultats[2],
+          resultats[3],
+          ""
+        )
+        compteur_champs = 0
+        
+    if compteur_champs > 0:
+      self.adaptateur_CSV.__ecrit_donnees__(
+        traited_data_file,
+        resultats[0],
+        resultats[1],
+        resultats[2],
+        resultats[3],
+        ""
+      )
+    
+
+    
+    self.__close_file__(origine_data_file)
+    self.__close_file__(traited_data_file)
+    
+    
+    
+    
   #############################################################################
   ##########################     Public methods      ##########################
   #############################################################################
@@ -146,5 +213,8 @@ class CassisAdaptateur(Adaptateur):
   
     if CassisAdaptateur.TECHNOLOGIES_NAME_FILE in path_data:
       self.__import_technologies__(path_data, path_csv)
+      
+    if CassisAdaptateur.APPLICATIONS_NAME_FILE in path_data:
+      self.__import_applications__(path_data, path_csv)
     
     
