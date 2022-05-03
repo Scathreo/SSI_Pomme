@@ -138,7 +138,6 @@ class OradadAdaptateur(Adaptateur):
                           :
                           index_header_file_end
                         ]     
-    print(horodatage_trouve)
     horodatage_trouve = datetime.strptime(
                           horodatage_trouve,
                           OradadAdaptateur.FORMAT_DATE_HEURE
@@ -192,10 +191,14 @@ class OradadAdaptateur(Adaptateur):
       index_attrs_data = 0  # Index dans String (début du bloc data des attrs)
       index_attrs_data_begin = 0  # Index dans String (début du bloc des data)
       index_attrs_data_end = 0  # Index dans String (fin du bloc des data)
-      index_attrs_data_fields_begin = 0  # Index dans String (début du bloc des data)
-      index_attrs_data_fields_end = 0  # Index dans String (fin du bloc des data)
-      index_attrs_data_fields_dn_begin = 0  # Index dans String (début du bloc dn des data)
-      index_attrs_data_fields_dn_end = 0  # Index dans String (fin du bloc dn des data)
+      index_attrs_data_fields_begin = 0     # Index dans String 
+                                            # (début du bloc des data)
+      index_attrs_data_fields_end = 0       # Index dans String 
+                                            # (fin du bloc des data)
+      index_attrs_data_fields_dn_begin = 0  # Index dans String 
+                                            # (début du bloc dn des data)
+      index_attrs_data_fields_dn_end = 0    # Index dans String 
+                                            # (fin du bloc dn des data)
     
     
     
