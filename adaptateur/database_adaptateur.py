@@ -23,8 +23,9 @@ class DatabaseAdaptateur(Adaptateur):
   KEY_USERNAME = "database_username"
   KEY_PASSWORD = "database_password"
   
-  KEY_TABLE_K6      = "database_table_k6"
-  KEY_TABLE_PRIMARY = "database_table_vulnerabilites_obsolescence"
+  KEY_TABLE_K6_APPLICATIONS = "database_table_k6_applications"
+  KEY_TABLE_K6_TECHNOLOGIES = "database_table_k6_technologies"
+  KEY_TABLE_PRIMARY         = "database_table_vulnerabilites_obsolescence"
                       
                       
 
