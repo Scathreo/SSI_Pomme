@@ -99,17 +99,18 @@ class CSVAdaptateur(Adaptateur):
     array
   ):
   
+    texte = ""
   
     try:
       print("Writing in file " + fichier.name + "...")
       
       for element in array:
-        texte =+ str(element) + CSVAdaptateur.DELIMITEUR_CSV
+        texte = texte + str(element) + CSVAdaptateur.DELIMITEUR_CSV
         
       texte = texte[
                       0
                       :
-                      len(texte) - CSVAdaptateur.DELIMITEUR_CSV
+                      len(texte) - len(CSVAdaptateur.DELIMITEUR_CSV)
                     ]
                     
       texte = texte + "\n"

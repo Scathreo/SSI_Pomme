@@ -110,24 +110,16 @@ class CassisAdaptateur(Adaptateur):
       
       
       if compteur_champs == len(CassisAdaptateur.TECHNOLOGIES_HEADERS) - 1:
-        self.adaptateur_CSV.__ecrit_donnees__(
+        self.adaptateur_CSV.__ecrit_donnees_from_array__(
           traited_data_file,
-          resultats[0],
-          resultats[1],
-          resultats[2],
-          resultats[3],
-          ""
+          resultats
         )
         compteur_champs = 0
         
     if compteur_champs > 0:
-      self.adaptateur_CSV.__ecrit_donnees__(
+      self.adaptateur_CSV.__ecrit_donnees_from_array__(
         traited_data_file,
-        resultats[0],
-        resultats[1],
-        resultats[2],
-        resultats[3],
-        ""
+        resultats
       )
     
 
@@ -177,24 +169,16 @@ class CassisAdaptateur(Adaptateur):
       
       
       if compteur_champs == len(CassisAdaptateur.TECHNOLOGIES_HEADERS) - 1:
-        self.adaptateur_CSV.__ecrit_donnees__(
+        self.adaptateur_CSV.__ecrit_donnees_from_array__(
           traited_data_file,
-          resultats[0],
-          resultats[1],
-          resultats[2],
-          resultats[3],
-          ""
+          resultats
         )
         compteur_champs = 0
         
     if compteur_champs > 0:
-      self.adaptateur_CSV.__ecrit_donnees__(
+      self.adaptateur_CSV.__ecrit_donnees_from_array__(
         traited_data_file,
-        resultats[0],
-        resultats[1],
-        resultats[2],
-        resultats[3],
-        ""
+        resultats
       )
     
 
